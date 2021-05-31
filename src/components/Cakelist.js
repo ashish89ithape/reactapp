@@ -9,9 +9,9 @@ let Card = (props) =>{
         <p className="card-text">{props.data.name}</p>
         
         <small className="text-muted " style = {{"color":"red"}}> Rs {props.data.price}</small>
-              <span style ={{"text-align":"right", "padding":"15px"}}>size <small className=" text-muted ">  {props.data.size}</small></span>
+             
             { props.data.discount ? <span style ={{"text-align":"right", "padding":"15px"}}>Discount :{props.data.discount}</span> :'' }
-        <p className="card-text"><small className="text-muted">  <a href={props.data.url} >{props.data.name}</a></small></p>
+        
         </div>
         </div>
       
