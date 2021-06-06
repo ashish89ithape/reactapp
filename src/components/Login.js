@@ -1,16 +1,16 @@
-import {Component} from 'react';
+import {Component} from "react"
 import axios from "axios";
-class Signup extends Component {
+
+class Login extends Component {
     constructor(props){
         super(props)
         this.state = {
             errors: {},
-            input:  {}
+            input: {}
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
-
     handleChange(event) {
         let input = this.state.input;
         input[event.target.name] = event.target.value;
@@ -23,20 +23,21 @@ class Signup extends Component {
         event.preventDefault();
         if(this.validate()){
             console.log(this.state);
-            const url =  'https://Apibyashu.herokuapp.com/api/register'
-            const loginData = { email:this.state.input.email,name:this.state.input.name, password:this.state.input.password }
+            const url =  'https://Apibyashu.herokuapp.com/api/login'
+            const loginData = { email:this.state.input.email, password:this.state.input.password }
             axios.post(url, loginData)
             .then(response =>  {
-
+                this.setState({
+                    errors: {},
+                    input: {}
+                });
+                //console.log(response.data);
                     if(response.data.message) {
-                            if (response.data.message === 'User Registered') {
-                                alert("Thank you for Registered, Verification link has been sent to your Registered Email Id. Please Verified Registered Email Id before Sign In")
-                            } else {
-                                alert(response.data.message);
-                            }
+                        alert(response.data.message)
                     }else{
-                        localStorage.setItem('name',response.data.name);
-                        localStorage.setItem('loggedin',true);
+                        localStorage.setItem('name',response.data.name)
+                        localStorage.setItem('loggedin',true)
+                        localStorage.setItem('token',response.data.token)
                         this.props.history.push("/")
                     }
                 }
@@ -46,25 +47,19 @@ class Signup extends Component {
     }
 
     validate(){
-        let input   = this.state.input;
-        let errors  = {};
+        let input = this.state.input;
+        let errors = {};
         let isValid = true;
-
-        if (input["password"] && input["confirmpassword"] && input["password"] !== input["confirmpassword"]) {
-            isValid = false;
-            errors["error"] = "Confirm Password is not match with Password";
-        }
-
         if (typeof input["email"] !== "undefined") {
             var pattern = new RegExp(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i);
             if (!pattern.test(input["email"])) {
               isValid = false;
-              errors["error"] = "Please enter valid email address.";
+              errors["email"] = "Please enter valid email address.";
             }
         }
-        if (!input["password"] || !input["email"] || !input["name"] || !input["confirmpassword"]) {
+        if (!input["password"] || !input["email"]) {
             isValid = false;
-            errors["error"] = "Please enter values";
+            errors["email"] = "Please enter values";
         }
 
         this.setState({
@@ -76,15 +71,10 @@ class Signup extends Component {
      render(){
          return(
             <div className="container">
-                <h2 className="card-title text-center">Sign Up</h2><br/>
+                <h2 className="card-title text-center">Sign In</h2><br/>
                 <div className="row justify-content-center">
                     <div style={{width:400}}>
                         <form className="container mt-3"  onSubmit={this.handleSubmit}>
-                        <div className="form-group">
-                            <label>Enter Name</label>
-                            <input type="text" name="name" value={this.state.input.name} onChange={this.handleChange} className="form-control"
-                            placeholder="Enter name" id="name" />
-                        </div>
                         <div className="form-group">
                             <label>Email address</label>
                             <input type="text" name="email" value={this.state.input.email} onChange={this.handleChange} className="form-control"
@@ -95,13 +85,9 @@ class Signup extends Component {
                             <input type="password" name="password" value={this.state.input.password} onChange={this.handleChange} className="form-control"
                             placeholder="Enter Password" id="password" />
                         </div>
-                        <div className="form-group">
-                            <label>Confirm Password</label>
-                            <input type="password" name="confirmpassword" value={this.state.input.confirmPassword} onChange={this.handleChange} className="form-control"
-                            placeholder="Enter Confirm Password" id="confirmpassword" />
-                        </div>
-                        <div className="text-danger">{this.state.errors.error && this.state.errors.error }</div>
-                        <input type="submit" value="Signup" className="btn btn-success" />
+                        <div className="text-danger">{this.state.errors.email && this.state.errors.email }
+                            {this.state.errors.password && this.state.errors.password }</div>
+                        <input type="submit" value="Sign In" className="btn btn-success" />
                         </form>
                     </div>
                 </div>
@@ -110,4 +96,4 @@ class Signup extends Component {
      }
 }
 
-export default Signup;
+export default Login
