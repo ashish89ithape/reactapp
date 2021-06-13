@@ -23,7 +23,7 @@ class Signup extends Component {
         event.preventDefault();
         if(this.validate()){
             console.log(this.state);
-            const url =  'https://Apibyashu.herokuapp.com/api/register'
+            const url =  process.env.REACT_APP_BASE_API_URL+"/register"
             const loginData = { email:this.state.input.email,name:this.state.input.name, password:this.state.input.password }
             axios.post(url, loginData)
             .then(response =>  {

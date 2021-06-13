@@ -1,10 +1,10 @@
 import Carousel from './components/Carousel';
-import Cake from './components/Cake';
+import Cakelist from './components/Cakelist';
 function Home() {
  return (
      <>
     <Carousel></Carousel>
-    <Cake></Cake>
+    <Cakelist></Cakelist>
     </>
  )
 }

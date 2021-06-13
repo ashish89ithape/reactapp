@@ -1,31 +1,23 @@
-
-import data from './data';
-import axios from 'axios';
-import Cakelist from './Cakelist';
-import { useEffect, useState } from 'react';
-
-
-var URL = process.env.REACT_APP_BASE_API_URL+"/allcakes";
-let Cake = (props)=>{
-  var [data,setData]=  useState([]);
-  axios({
-    method:"GET",
-    url:URL,
-    data:'JSON'
-  }).then((response)=>{
-    console.log(response.data)
-    setData(response.data.data)
-  }, (error)=>{})
-    return(
-      <div>
-        <div className="card-groups"  >
-          { data.map((each,index)=>{
-              return (
-                <Cakelist data={each} index ={index}></Cakelist>
-              )
-          }) }
-        </div>
-      </div>
-    )
+import {Link} from "react-router-dom"
+let Cake = (props) =>{
+    if(props.data){
+        return (
+            <div className="col-sm-3" >
+            <div className="card" style ={{"height":"320px", "border": "1px solid #ddd", "margin":"0 0 10px 0"}}>
+            <Link to={'/cake/'+props.data.cakeid}>
+                <img className="card-img-top" src={props.data.image} style ={{"height":"200px"}} alt="Cake"/>
+            </Link>
+                <div className="card-body">
+                    <p className="card-text">{props.data.name}</p>
+                    <h6 className="card-title"> Rs {props.data.price}</h6>
+                    { props.data.discount ? <span style ={{"text-align":"right", "padding":"15px"}}>Discount :{props.data.discount}</span> :'' }
+                </div>
+            </div>
+            </div>
+        )
+    }
+    else{
+        return null
+    }
 }
 export default Cake

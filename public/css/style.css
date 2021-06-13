@@ -81,3 +81,31 @@ a:hover{
   display: flex;
   flex-flow: row wrap;
 }
+
+.container {
+  min-height: 660px;
+}
+.cart-img {
+	width: 100px;
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+
+.footer {
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 60px;
+  line-height: 60px; /* Vertically center the text there */
+  background-color: #f5f6f8;
+  display: block;
+}
+
+footer.footer.font-small.blue a {
+  display: inline-block;
+}
+
+.link {
+  cursor: pointer;
+}

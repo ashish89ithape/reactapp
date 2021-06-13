@@ -1,24 +1,39 @@
-import {Link} from "react-router-dom"
-let Cakelist = (props) =>{
-    console.log('props.data', props.data)
-    if(props.data){
-        return (
-            <div class="col-sm-3">
-            <div className="card" style ={{"height":"350px", "border": "1px solid #ddd", "margin":"0 0 10px 0"}}>
-            <Link to={'/cake/'+props.data.cakeid}>
-                <img className="card-img-top" src={props.data.image} style ={{"height":"200px"}} alt="Cake"/>
-            </Link>
-                <div className="card-body">
-                    <p className="card-text">{props.data.name}</p>
-                    <h6 class="card-title"> Rs {props.data.price}</h6>
-                    { props.data.discount ? <span style ={{"text-align":"right", "padding":"15px"}}>Discount :{props.data.discount}</span> :'' }
-                </div>
+import axios from 'axios';
+import Cake from './Cake';
+import { useState, useEffect } from 'react';
+
+var URL = process.env.REACT_APP_BASE_API_URL+"/allcakes";
+let Cakelist = ()=>{
+    var [data,setData]          = useState([]);
+    var [isLoading, setLoading] = useState(true);
+
+    useEffect(()=>{
+        axios({
+            method:"GET",
+            url   :URL,
+            data  :'JSON'
+        }).then((response)=>{
+            setLoading(false);
+            let CakeData = response.data.data
+            setData(CakeData)
+        }, (error)=>{
+            alert('Cake list is Empty');
+            setLoading(false)
+        })
+        },[]
+    )
+    return(
+        <div className="container">
+            {isLoading && <div id="loadingImage">
+                <img src={process.env.PUBLIC_URL + '/Material-Loading-CSS.gif'} alt="Loading" style={{ "width":"100%" }} />
+            </div>}
+            <div className="card-groups">
+            {
+            data.map((each,index)=>{
+                return ( <Cake data={each} index={index} key={index}></Cake> )
+            }) }
             </div>
-            </div>
-        )
-    }
-    else{
-        return null
-    }
+        </div>
+    )
 }
 export default Cakelist
