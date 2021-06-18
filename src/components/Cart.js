@@ -60,13 +60,19 @@ function Cart(props) {
             method: "POST",
             headers: { authtoken: localStorage.token },
             data: { cakeid: cakeid }
-        }).then((response) => {
-            props.history.push("/cart")
-        })
+        }).then(res => {
+            props.dispatch({
+                type: 'REMOVE_ITEM_FROM_CART',
+                payload: {
+                    data: res.data
+                }
+            })
+        }, err => {})
     }
     return (
         <>
-            <div className="container">
+            <div className="wrapper">
+                <div className="cake-container">
                 {isLoading && <div id="loadingimage">
                     <img src={process.env.PUBLIC_URL + '/Material-Loading-CSS.gif'} alt="Loading" style={{ "width":"100%" }} />
                 </div>}
@@ -75,7 +81,7 @@ function Cart(props) {
                         <nav aria-label="breadcrumb">
                             <ol className="breadcrumb  mt-2">
                                 <li className="breadcrumb-item"><Link to="/">Home</Link></li>
-                                <li aria-current="page" className="breadcrumb-item active">Shopping cart</li>
+                                <li aria-current="page" className="breadcrumb-item active">Shopping Cart</li>
                             </ol>
                         </nav>
                     </div>
@@ -83,8 +89,8 @@ function Cart(props) {
                     <div id="basket" className="col-lg-9">
                         <div className="box">
                             <form method="post">
-                                <h1>Shopping cart</h1>
-                                <div className="table-responsive">
+                                <h1>Shopping Cart</h1>
+                                <div className="table-responsive cart">
                                     <table className="table">
                                         <thead>
                                             <tr>
@@ -124,7 +130,7 @@ function Cart(props) {
 
                                 <div className="box-footer d-flex justify-content-between flex-column flex-lg-row mb-2">
                                     <div className="right">
-                                        <Link to="/checkout" className="btn btn-primary">Proceed to checkout <i className="fa fa-chevron-right"></i></Link>
+                                        <Link to="/checkout" className="btn btn-pink-cake">Proceed to Checkout <i className="fa fa-chevron-right"></i></Link>
                                     </div>
                                 </div>
                             </form>
@@ -134,10 +140,10 @@ function Cart(props) {
                     <div className="col-lg-3">
                         <div id="order-summary" className="box">
                             <div className="box-header">
-                                <h3 className="mb-0">Order summary</h3>
+                                <h3 className="mb-0">Order Summary</h3>
                             </div>
                             <p className="text-muted">Shopping cart summary.</p>
-                            <div className="table-responsive">
+                            <div className="table-responsive cart">
                                 <table className="table">
                                     <tbody>
                                         <tr>
@@ -157,9 +163,15 @@ function Cart(props) {
                     </div>
                 </div> }
             </div>
+            </div>
         </>
     )
 }
-Cart = withRouter(Cart)
-export default connect(function (state, props) {
+
+Cart = connect(function (state, props){
+    if (state.CartReducer.removed) {
+        state.CartReducer.removed = false
+        window.location.reload()
+    }
 })(Cart)
+export default withRouter(Cart)

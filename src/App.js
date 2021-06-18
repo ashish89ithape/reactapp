@@ -1,7 +1,7 @@
 import Navbar from './components/Navbar'
 import Signup from "./components/Signup"
 import Login from './components/Login'
-import {BrowserRouter as Router, Route, Switch, withRouter } from 'react-router-dom'
+import {BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import Home from "./Home"
 import './App.css';
 import Pagenotfound from "./Pagenotfound"
@@ -14,11 +14,19 @@ import Emptycart from "./components/Emptycart"
 import Checkout from "./components/Checkout"
 import { connect } from 'react-redux'
 import Footer from "./components/Footer"
+import Orders from "./components/Orders"
+import axios from "axios"
+
 
 var details = {
   projectname : "CakeShop",
   logo        : process.env.PUBLIC_URL + '/logo.png',
 }
+
+axios.interceptors.request.use((request) => {
+    request.headers["authtoken"] = localStorage.getItem('token')
+    return request
+})
 
 function App() {
     var [login,setLogin] = useState(false)
@@ -40,6 +48,7 @@ function App() {
                     <Route exact path='/cakelist' component={Cakelist}></Route>
                     <Route exact path='/emptycart' component={Emptycart}></Route>
                     <Route path='/checkout' component={Checkout}></Route>
+                    <Route exact path="/orders" component={Orders} />
                     <Route exact path="/*" component={Pagenotfound} />
                 </Switch>
                 <Footer />

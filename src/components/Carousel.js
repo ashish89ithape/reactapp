@@ -8,13 +8,13 @@ function Carousel() {
             </ol>
             <div className="carousel-inner">
                 <div className="carousel-item active">
-                <img  height={600} src={process.env.PUBLIC_URL + '/banners/slide1.jpg'} className="d-block w-100" alt="banner" />
+                <img  height={500} src={process.env.PUBLIC_URL + '/banners/slide1.jpg'} className="d-block w-100" alt="banner" />
                 </div>
                 <div className="carousel-item">
-                <img  height={600} src={process.env.PUBLIC_URL + '/banners/slide2.jpg'} className="d-block w-100" alt="banner" />
+                <img  height={500} src={process.env.PUBLIC_URL + '/banners/slide2.jpg'} className="d-block w-100" alt="banner" />
                 </div>
                 <div className="carousel-item">
-                <img height={600} src={process.env.PUBLIC_URL + '/banners/slide1.jpg'} className="d-block w-100" alt="banner" />
+                <img height={500} src={process.env.PUBLIC_URL + '/banners/slide1.jpg'} className="d-block w-100" alt="banner" />
                 </div>
             </div>
             <a className="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">

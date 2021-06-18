@@ -3,7 +3,6 @@ import axios from "axios";
 
 class Login extends Component {
     constructor(props){
-        console.log("pppppp",props);
         super(props)
         this.state = {
             errors: {},

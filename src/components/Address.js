@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useState } from "react"
 import {connect} from "react-redux"
+import {withRouter} from "react-router-dom"
 
-function Address(){
+function Address(props){
     var [addressformdata,setAddressformdata]=useState({
         name:"",
         email:"",
@@ -10,6 +11,11 @@ function Address(){
         address2:"",
         city:"",
         pincode:""
+    })
+
+    props.dispatch({
+        type: "CHECKOUT_ACTIVE_PATH",
+        payload: 'address'
     })
     let [errors,setErrors]=useState({})
 
@@ -20,7 +26,7 @@ function Address(){
         setAddressformdata({...addressformdata,[name]:value})
     }
     function isEmpty(value){
-        return (value == null || value.length === 0 || value=="");
+        return (value == null || value.length === 0 || value === "");
       }
 
     function validateForm(addressformdata){
@@ -77,14 +83,14 @@ function Address(){
         }else{
             alert('form submitted')
             setErrors({})
+            props.onSubmit(addressformdata)
             console.log(addressformdata)
-            
         }
     }
     return (
         <>
-        <h3>Address</h3>
-        <form onSubmit={addAddress}>
+
+        <form onSubmit={addAddress} style={{padding: '15px' }}>
             <div className="form-row">
                 <div className="form-group col-md-4">
                     <label for="inputName">Name</label>
@@ -136,4 +142,4 @@ function Address(){
     );   
 }
 
-export default connect()(Address)
+export default connect() (withRouter(Address))

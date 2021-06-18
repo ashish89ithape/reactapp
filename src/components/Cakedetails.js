@@ -55,14 +55,17 @@ function Cakedetails(props){
     }
     return  (
         <>
-            <div className="container">
-                <div className="col-lg-12">
-                    <nav aria-label="breadcrumb">
-                        <ol className="breadcrumb mt-2">
-                            <li className="breadcrumb-item"><Link to="/" >Home</Link></li>
-                            {cakedetails.name && <li aria-current="page" className="breadcrumb-item active">{cakedetails.name}</li>}
-                        </ol>
-                    </nav>
+            <div className="wrapper">
+            <div className="cake-container">
+                <div className="row">
+                    <div className="col-lg-12">
+                        <nav aria-label="breadcrumb">
+                            <ol className="breadcrumb mt-2">
+                                <li className="breadcrumb-item"><Link to="/" >Home</Link></li>
+                                {cakedetails.name && <li aria-current="page" className="breadcrumb-item active">{cakedetails.name}</li>}
+                            </ol>
+                        </nav>
+                    </div>
                 </div>
                 {isLoading && <div id="loadingimage">
                     <img src={process.env.PUBLIC_URL + '/Material-Loading-CSS.gif'} alt="Loading" style={{ "width":"100%" }} />
@@ -85,6 +88,7 @@ function Cakedetails(props){
                         </div>
                     </div>
                 </div>}
+            </div>
             </div>
         </>
     )

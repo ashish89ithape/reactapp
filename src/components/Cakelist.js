@@ -23,17 +23,19 @@ let Cakelist = ()=>{
         },[]
     )
     return(
-        <div className="container">
-            {isLoading && <div id="loadingImage">
-                <img src={process.env.PUBLIC_URL + '/Material-Loading-CSS.gif'} alt="Loading" style={{ "width":"100%" }} />
-            </div>}
-            <div className="card-groups">
-            {
-            data.map((each,index)=>{
-                return ( <Cake data={each} index={index} key={index}></Cake> )
-            }) }
+            <div className="wrapper">
+                <div className="cake-container">
+                    {isLoading && <div id="loadingImage">
+                        <img src={process.env.PUBLIC_URL + '/Material-Loading-CSS.gif'} alt="Loading" style={{ "width":"100%" }} />
+                    </div>}
+                    <div className="card-groups">
+                        {
+                        data.map((each,index)=>{
+                            return ( <Cake data={each} index={index} key={index}></Cake> )
+                        }) }
+                    </div>
+                </div>
             </div>
-        </div>
     )
 }
 export default Cakelist
