@@ -22,7 +22,7 @@ function Cakedetails(props){
             alert('Cake not found');
         }
         )
-    },[])
+    },[APIUrl])
 
     let addToCart = () => {
         if (!localStorage.token) {

@@ -17,31 +17,36 @@ function Search(props){
             setLoading(false)
             setCakes(response.data.data)
         },(error)=>{setLoading(false)})
-     }, [query.q]);
+     }, [URL, query.q]);
 
      if (Cakes.length === 0) {
         return (
-            <div class="container">
-                <div>
+            <div className="container">
+                {isLoading && <div id="loadingImage">
+                <img src={process.env.PUBLIC_URL + '/Material-Loading-CSS.gif'} alt="Loading" style={{ "width":"100%" }} />
+                </div>}
+                {!isLoading && <div>
                     <center><h1>No Cake found!</h1></center>
-                </div>
+                </div> }
             </div>
         );
      }
 
     return (
-        <div className="container">
-            {isLoading && <div id="loadingImage">
+        <div className="wrapper">
+            <div className="cake-container">
+                {isLoading && <div id="loadingImage">
                 <img src={process.env.PUBLIC_URL + '/Material-Loading-CSS.gif'} alt="Loading" style={{ "width":"100%" }} />
-            </div>}
-            <div className="card-groups">
-            {
-            Cakes.map((each,index)=>{
-                return ( <Cake data={each} index={index} key={index}></Cake> )
-            }) }
+                </div>}
+                <div className="card-groups">
+                    {
+                    Cakes.map((each,index)=>{
+                    return ( <Cake data={each} index={index} key={index}></Cake> )
+                    }) }
+                </div>
             </div>
         </div>
-
     )
 }
 export default Search
+

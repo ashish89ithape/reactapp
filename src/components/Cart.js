@@ -27,9 +27,16 @@ function Cart(props) {
                 props.history.push('/emptycart')
                 return false;
             }
+            // props.dispatch({
+            //     type: "CARTITEMS",
+            //     payload: response.data.data
+            // })
+
             props.dispatch({
-                type: "CARTITEMS",
-                payload: response.data.data
+                type: "SHOW_CART",
+                payload: {
+                    data: response.data.data
+                }
             })
 
             var total = 0;
@@ -49,7 +56,7 @@ function Cart(props) {
 
             setTotalPrice(total)
         }, (error) => { setLoading(false) })
-    }, [])
+    }, [props])
 
     var RemoveCakeFromCartUrl = process.env.REACT_APP_BASE_API_URL+"/removecakefromcart";
 
@@ -105,7 +112,7 @@ function Cart(props) {
 
                                             {cakes.map((each, index) => {
                                                 return (
-                                                    <tr>
+                                                    <tr  key={index}>
                                                         <td>
                                                             <p className="link"><Link to={'/cake/'+each.cakeid}><img className="cart-img" src={each.image} alt="Cake"/></Link></p>
                                                         </td>
@@ -121,8 +128,8 @@ function Cart(props) {
                                         </tbody>
                                         <tfoot>
                                             <tr>
-                                                <th colspan="3">Total</th>
-                                                <th colspan="2">Rs.{totalPrice}</th>
+                                                <th colSpan="3">Total</th>
+                                                <th colSpan="2">Rs.{totalPrice}</th>
                                             </tr>
                                         </tfoot>
                                     </table>
@@ -168,10 +175,10 @@ function Cart(props) {
     )
 }
 
-Cart = connect(function (state, props){
+export default connect(function (state) {
     if (state.CartReducer.removed) {
         state.CartReducer.removed = false
         window.location.reload()
     }
-})(Cart)
-export default withRouter(Cart)
+    return {}
+})(withRouter(Cart))

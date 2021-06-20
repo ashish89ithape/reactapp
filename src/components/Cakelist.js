@@ -1,9 +1,11 @@
 import axios from 'axios';
 import Cake from './Cake';
 import { useState, useEffect } from 'react';
+import {connect} from "react-redux";
+import {withRouter} from "react-router-dom";
 
 var URL = process.env.REACT_APP_BASE_API_URL+"/allcakes";
-let Cakelist = ()=>{
+let Cakelist = (props)=>{
     var [data,setData]          = useState([]);
     var [isLoading, setLoading] = useState(true);
 
@@ -22,6 +24,25 @@ let Cakelist = ()=>{
         })
         },[]
     )
+
+    useEffect(() => {
+        if (localStorage.getItem('token')) {
+            axios({
+                url: process.env.REACT_APP_BASE_API_URL + '/cakecart',
+                method: 'post',
+            }).then(res => {
+                const cakeList = res.data.data
+                props.dispatch({
+                    type: "SHOW_CART",
+                    payload: {
+                        data: cakeList
+                    }
+                })
+            }, err => {
+            })
+        }
+    }, [props])
+
     return(
             <div className="wrapper">
                 <div className="cake-container">
@@ -38,4 +59,4 @@ let Cakelist = ()=>{
             </div>
     )
 }
-export default Cakelist
+export default connect() (withRouter(Cakelist))

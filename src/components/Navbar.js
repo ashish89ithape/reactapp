@@ -1,5 +1,6 @@
-import {Link, Router, withRouter} from "react-router-dom";
+import {Link, withRouter} from "react-router-dom";
 import querystring from "query-string";
+import {connect} from "react-redux";
 
 let Navbar= (props)=>{
     let  searchstring
@@ -35,7 +36,7 @@ let Navbar= (props)=>{
                 <span className="navbar-toggler-icon"></span>
             </button>
             <div className="collapse navbar-collapse" id="navbarSupportedContent">
-                <div className="col-sm-4">
+                <div className="col-sm-3">
                     <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                         <Link to="/cakelist">
                             <li className="nav-item"><lable className="nav-link" aria-current="page">Cup Cake</lable></li>
@@ -45,17 +46,23 @@ let Navbar= (props)=>{
                         </Link>
                     </ul>
                 </div>
-                <div className="col-sm-5">
+                <div className="col-sm-4">
                     <form className="d-flex align-items-end pull-right">
-                        <input className="form-control me-2" onChange = {getserchText} type="search" placeholder="Search" aria-label="Search"/>
+                        <input className="form-control me-2" onChange = {getserchText} type="search"  placeholder="Search" aria-label="Search"/>
                         <button className="search btn btn-outline-success ml-2" onClick={search} type="submit">Search</button>
                     </form>
                 </div>
 
-                <div className="col-sm-3">
-                    <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+                <div className="col-sm-5">
+                    <ul className="navbar-nav me-auto mb-2 mb-lg-0" style={{ 'float': 'right'}}>
+                        <li class="nav-item">
+                            {localStorage.loggedin && <Link to="/cart"><i class="bi bi-cart"></i>{props.totalItems > 0 && <span class="nav-cart-cout">{props.totalItems}</span>}</Link>}
+                        </li>
+                        <li class="nav-item" >
+                            {localStorage.loggedin && <Link to="/orders"><lable className="nav-link active pull-right" aria-current="page" >Order</lable></Link>}
+                        </li>
                         <li className="nav-item">
-                            <lable className="nav-link active pull-right" aria-current="page" > {localStorage.name && localStorage.name }</lable>
+                            <lable className="nav-link active pull-right" aria-current="page" > Welcome ({localStorage.name && localStorage.name })</lable>
                         </li>
                         <li>
                             {!localStorage.loggedin && <Link to="/login"><button className="search btn btn-primary mr-2" type="button">Login</button></Link>}
@@ -71,5 +78,8 @@ let Navbar= (props)=>{
     )
   }
 
-  Navbar = withRouter(Navbar)
-  export default Navbar;
+  export default connect((state, props) => {
+    return {
+        totalItems: state.CartReducer.totalItems
+    }
+}) (withRouter(Navbar));

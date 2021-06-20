@@ -1,12 +1,12 @@
-import {useEffect, useState} from "react";
 import axios from "axios";
 import {connect} from "react-redux";
 import {withRouter, Link} from "react-router-dom";
 
 //const Summary = (props) => {
 function Summary(props) {
-    const [cakes, getCakes] = useState([]);
-
+    console.log('propspropsprops',props)
+   // const [cakes, getCakes] = useState([]);
+    let cakes = props.cakes
     let totalPrice = 0
 
     const activeNextUrl = () => {
@@ -18,27 +18,7 @@ function Summary(props) {
         payload: 'summary'
     })
 
-    useEffect(() => {
-        axios({
-            url: process.env.REACT_APP_BASE_API_URL +'/cakecart',
-            method: 'post'
-        }).then(res => {
-            if (res.data !== 'Session Expired') {
-                const cakeList = res.data.data
-                getCakes(cakeList);
-                props.dispatch({
-                    type: "SHOW_CART",
-                    payload: {
-                        data: cakeList
-                    }
-                })
-            } else {
-                props.history.push('/login')
-            }
-        }, err => {
-            console.log('error')
-        })
-    }, [])
+   
 
     var RemoveCakeFromCartUrl = process.env.REACT_APP_BASE_API_URL+"/removecakefromcart";
 
@@ -79,7 +59,7 @@ function Summary(props) {
                                 {cakes.map((each, index) => {
                                     totalPrice += each.price
                                     return (
-                                        <tr>
+                                        <tr className={index}>
                                             <td>
                                                 <p className="link"><Link to={'/cake/'+each.cakeid}><img className="cart-img" src={each.image} alt="Cake"/></Link></p>
                                             </td>
@@ -95,8 +75,8 @@ function Summary(props) {
                             </tbody>
                             <tfoot>
                                 <tr>
-                                    <th colspan="3">Total</th>
-                                    <th colspan="2">Rs.{totalPrice}</th>
+                                    <th colSpan="3">Total</th>
+                                    <th colSpan="2">Rs.{totalPrice}</th>
                                 </tr>
                             </tfoot>
                         </table>
@@ -104,9 +84,8 @@ function Summary(props) {
 
                 }
             </div>
-            <div>
-                <span style={{float: "left"}}>Total Price: Rs. {totalPrice} /-</span>
-                <button className="btn btn-primary" style={{float: "right"}} onClick={activeNextUrl}>
+            <div className="row">
+                <button className="btn btn btn-pink-cake" style={{float: "right"}} onClick={activeNextUrl}>
                 <span>
                     Next
                 </span>
@@ -118,10 +97,9 @@ function Summary(props) {
 
 // export default connect() (withRouter(Summary))
 
-Summary = withRouter(Summary)
 export default connect(function (state, props) {
     return {
-        cakes: state.CartReducer.dbCartItems,
+        cakes: state.CartReducer.cart,
         totalPrice: state.CartReducer.totalPrice
     }
-})(Summary)
+})(withRouter(Summary))

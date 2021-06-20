@@ -24,7 +24,7 @@ function CartReducer(state = {
         }
         case "CARTITEMS": {
             state = { ...state }
-            state.dbCartItems = action.payload
+            state.cart = action.payload
             return state
         }
         case "TOTALPRICE": {

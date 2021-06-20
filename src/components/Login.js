@@ -71,10 +71,10 @@ class Login extends Component {
      render(){
          return(
             <div className="container">
-                <h2 className="card-title text-center">Sign In</h2><br/>
+                <h2 className="card-title text-center">Sign In</h2>
                 <div className="row justify-content-center">
-                    <div style={{width:400}}>
-                        <form className="container mt-3"  onSubmit={this.handleSubmit}>
+                    <div className="card" style={{width:400}}>
+                        <form className=" mt-3"  onSubmit={this.handleSubmit}>
                         <div className="form-group">
                             <label>Email address</label>
                             <input type="text" name="email" value={this.state.input.email} onChange={this.handleChange} className="form-control"

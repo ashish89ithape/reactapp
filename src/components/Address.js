@@ -44,13 +44,13 @@ function Address(props){
                 error_array.email="Enter valid Email";
             }
         }
-        if(isEmpty(addressformdata.contact))
+        if(isEmpty(addressformdata.phone))
         {
-            error_array.contact="please enter conntact";
+            error_array.phone="please enter phone no.";
         }
-        if(isEmpty(addressformdata.address1))
+        if(isEmpty(addressformdata.address))
         {
-            error_array.address1="please enter address line 1";
+            error_array.address="please enter address line 1";
         }
         if(isEmpty(addressformdata.address2))
         {
@@ -106,15 +106,15 @@ function Address(props){
             <div className="form-row">
                 <div className="form-group col-md-4">
                     <label for="inputName">Contact No</label>
-                    <input type="text" name="contact" value={addressformdata.contact} className="form-control" onChange={setFormParam} id="inputName" placeholder="Contact No"/>
-                    <div className="text-danger">{errors.contact}</div>
+                    <input type="text" name="phone" value={addressformdata.phone} className="form-control" onChange={setFormParam} id="inputName" placeholder="phone No"/>
+                    <div className="text-danger">{errors.phone}</div>
                 </div>
             </div>
             <div className="form-row">
                 <div className="form-group col-md-8">
                     <label for="inputAddress">Address</label>
-                    <input type="text" name="address1" value={addressformdata.address1} className="form-control" onChange={setFormParam} id="inputAddress" placeholder="1234 Main St"/>
-                    <div className="text-danger">{errors.address1}</div>
+                    <input type="text" name="address" value={addressformdata.address} className="form-control" onChange={setFormParam} id="inputAddress" placeholder="1234 Main St"/>
+                    <div className="text-danger">{errors.address}</div>
                 </div>
             </div>
             <div className="form-row">

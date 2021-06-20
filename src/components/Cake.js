@@ -49,7 +49,7 @@ let addToCart = (cakeid, name, image, price, weight) => {
                     <h6 className="card-title"> Rs {props.data.price}</h6>
                     { props.data.discount ? <span style ={{"text-align":"right", "padding":"15px"}}>Discount :{props.data.discount}</span> :'' }
                 </div>
-                <button onClick={() => addToCart(props.data.cakeid, props.data.name, props.data.image, props.data.price, props.data.weight)} class="btn btn-pink-cake mar-right-10">Add to Cart</button>
+                <button onClick={() => addToCart(props.data.cakeid, props.data.name, props.data.image, props.data.price, props.data.weight)} className="btn btn-pink-cake mar-right-10">Add to Cart</button>
             </div>
             </div>
         )
@@ -58,5 +58,5 @@ let addToCart = (cakeid, name, image, price, weight) => {
         return null
     }
 }
-Cake = withRouter(Cake)
-export default connect()(Cake);
+// Cake = withRouter(Cake)
+export default connect()(withRouter(Cake));

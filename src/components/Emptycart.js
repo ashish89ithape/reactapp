@@ -1,12 +1,8 @@
-import { Route, withRouter } from "react-router";
-import { useRouteMatch, Link } from "react-router-dom"
-import { connect } from "react-redux";
+
+import {  Link } from "react-router-dom"
 
 function Emptycart(props) {
 
-    var route = useRouteMatch();
-    var url = route.url
-    var path = route.path
     if (!localStorage.token) {
         props.history.push('/login')
         return false;
@@ -34,5 +30,4 @@ function Emptycart(props) {
         </>
     )
 }
-Emptycart = withRouter(Emptycart)
-export default connect()(Emptycart)
+export default Emptycart
